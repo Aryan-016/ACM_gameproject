@@ -4,22 +4,24 @@ os.system('cls')
 import pygame
 import random
 from pygame import mixer
+
 mixer.init()
 pygame.font.init()
-#initialise pygame
 pygame.init()  
+base_path=os.path.dirname(__file__)
+print(base_path)
 
-#set screen(length,breadth)
 screen=pygame.display.set_mode((1000,600))
 pygame.display.set_caption('Z FIGHTERS')
 
-#set frame rate
-
 g_font=pygame.font.SysFont("comicsans",30,bold=True)
-bg_image=pygame.image.load("D:/python/game images/battlebg.png")
+bg_path=(base_path+"/game images/battlebg.png")
+print(bg_path)
+bg_image=pygame.image.load(bg_path)
 scaled_bg=pygame.transform.scale(bg_image,(1000,600))
 
-bg_entry=pygame.image.load("D:/python/game images/bgimag.webp")
+bg_entrypath=(base_path+"/game images/bgimag.webp")
+bg_entry=pygame.image.load(bg_entrypath)
 scaled_bg_entry=pygame.transform.scale(bg_entry,(1000,600))
 
 def main():
@@ -35,12 +37,15 @@ def main():
             self.cool_down_counter=0
             self.score=0
             self.sound=sound_fx
-            self.goku=pygame.image.load("D:\python\game images\gifwarrior.png")
+
+            goku_path=(base_path+"/game images/gifwarrior.png")
+            self.goku=pygame.image.load(goku_path)
             self.gif=self.load_images()
             self.frameindex=0
             self.counter=0
             self.beams=[]
-            self.beamimg=pygame.image.load("D:\python\game images\energyball2.png")
+            beam_path=(base_path+"/game images/energyball2.png")
+            self.beamimg=pygame.image.load(beam_path)
             self.beam=pygame.transform.scale(self.beamimg,(70,70))
             self.mask = pygame.mask.from_surface(self.beam)
             self.image=self.gif[self.frameindex]
@@ -121,7 +126,6 @@ def main():
             if self.attacking==False:
                 surface.blit(self.gif[0],(self.x,self.y))
             else:
-                # self.attack_type=1
                 animation_cooldown = 150
                 self.image = self.gif[self.frameindex]
                 surface.blit(self.image,(self.x,self.y))
@@ -141,10 +145,10 @@ def main():
 
     class Enemy:
         def __init__(self, x, y):
-            # self.=pygame.Rect((x,y,60,60))
             self.x=x
             self.y=y
-            self.enemyimg=pygame.image.load("D:/python/game images/fire.png")
+            enemy_path=(base_path+"/game images/fire.png")
+            self.enemyimg=pygame.image.load(enemy_path)
             self.enimg=pygame.transform.scale(self.enemyimg,(70,70))
             self.mask = pygame.mask.from_surface(self.enimg)
         def move(self,vel):
@@ -158,8 +162,8 @@ def main():
     class Villain(Fighter):
         def __init__(self, x, y):
             self.rect=pygame.Rect((x,y,60,140))
-            self.goku=pygame.image.load("D:\python\game images\gifwarrior.png")
-            self.villain=pygame.image.load("D:/python/game images/frieza-removebg-preview.png")
+            villain_path=(base_path+"/game images/frieza-removebg-preview.png")
+            self.villain=pygame.image.load(villain_path)
             self.scaled_villain=pygame.transform.scale(self.villain,(280,200))
 
         def draw(self,surface):
@@ -169,7 +173,8 @@ def main():
         def __init__(self, x, y):
             self.x=x
             self.y=y
-            self.beamimg=pygame.image.load("D:\python\game images\energyball2.png")
+            beam_path=(base_path+"/game images/energyball2.png")
+            self.beamimg=pygame.image.load(beam_path)
             self.beam=pygame.transform.scale(self.beamimg,(70,70))
             self.mask = pygame.mask.from_surface(self.beam)
 
@@ -193,12 +198,12 @@ def main():
         offset_y=obj2.y - obj1.y 
         return obj1.mask.overlap(obj2.mask, (offset_x, offset_y)) != None
 
-    mixer.music.load("D:/python/game images/bg song.mp3")
+    mixer.music.load(base_path+"/game images/bg song.mp3")
     mixer.music.set_volume(0.4)
     mixer.music.play(-1)
 
     clock=pygame.time.Clock()
-    collision_fx=pygame.mixer.Sound("D:\python\game images\goku-ultra-instinct-ultra-instinct-autonomous-attack-sound-effect.mp3")
+    collision_fx=pygame.mixer.Sound(base_path+"\game images\goku-ultra-instinct-ultra-instinct-autonomous-attack-sound-effect.mp3")
     wave=0
     FPS=60
     enemies=[]
@@ -292,7 +297,7 @@ def main():
 def main_menu():
     title_font=pygame.font.SysFont("comicscans",70)
     instruction_font=pygame.font.SysFont("comicscans",40)
-    mixer.music.load("D:\python\game images\game opening.mp3")
+    mixer.music.load(base_path+"\game images\game opening.mp3")
     mixer.music.set_volume(1.0)
     mixer.music.play(-1)
     run=True
